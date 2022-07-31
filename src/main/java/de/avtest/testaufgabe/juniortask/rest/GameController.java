@@ -191,6 +191,7 @@ public class GameController {
     // We've previously ensured that the player is allowed to play and the game has not ended yet.
     // The method gameBoard.getSpace( x, y ) will return the content of a space - either GameMark.NONE (free),
     // GameMark.CROSS (belongs to the bot) or GameMark.CIRCLE (belongs to the player).
+    
     // You can compare two values with
     // a == b       gets true if a is equals b
     // a != b       gets true if a is not equals b
@@ -200,8 +201,11 @@ public class GameController {
     // [ The code to check if the space is free goes here ]
 
     // If the space is not free, run the code in the line below by removing the //
-    //return ResponseEntity.status(HttpStatus.FORBIDDEN).body("This space has already been claimed!");
+    if(gameBoard.getSpace(x, y) == GameMark.CROSS || gameBoard.getSpace(x, y) == GameMark.CIRCLE) {
+    	return ResponseEntity.status(HttpStatus.FORBIDDEN).body("This space has already been claimed!");
+    }
 
+    gameBoard.setSpace(x, y, GameMark.CIRCLE);
     // [ The code to update the game board goes here ]
 
     // Saving the game board and output it to the player
