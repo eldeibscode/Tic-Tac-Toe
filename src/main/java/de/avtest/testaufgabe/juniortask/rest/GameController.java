@@ -126,9 +126,47 @@ public class GameController {
     // =============================================================================================================
     // Here, you need to code a way to find out who has won the game.
     // This function needs to return null if nobody has won yet - you can use someoneHasWon( $game ) for this.
+  	if(!someoneHasWon(gameBoard)) {
+  		return null;
+  	}
     // If someone has won, it needs to return either GamePlayer::Human or GamePlayer::Robot.
     // =============================================================================================================
 
+//  test row
+//  r is the index of row
+//	c is the index of column 
+//  resRow for testing the rows 
+//  resCol for testing the columns
+//  resDiag for testing the diagonal
+//  resAntiDiag for testing the Anti-diagonal
+  	int boardSize = gameBoard.getSize();
+  	int resRow, resCol, resDiag, resAntiDiag;
+  	for (int r = 0; r <boardSize; r++){
+  		resRow = resCol = resDiag = resAntiDiag = 0;
+  		for (int c = 0; c < boardSize; c++) {
+  			
+  			if(gameBoard.getSpace(r, c) == GameMark.CROSS) resRow ++;
+  			else if(gameBoard.getSpace(r, c) == GameMark.CIRCLE) resRow --;
+  			
+  			if(gameBoard.getSpace(c, r) == GameMark.CROSS) resCol ++;
+  			else if(gameBoard.getSpace(c, r) == GameMark.CIRCLE) resCol --;
+  			
+  			if(r == 0 && gameBoard.getSpace(c, c) == GameMark.CROSS) resDiag ++;
+  			else if(r == 0 && gameBoard.getSpace(c, c) == GameMark.CIRCLE) resDiag --;
+  			
+  			
+  			if(r == 0 && gameBoard.getSpace(c, boardSize -1 -c) == GameMark.CROSS) resAntiDiag ++;
+  			else if(r == 0 && gameBoard.getSpace(c, boardSize -1 -c) == GameMark.CIRCLE) resAntiDiag --;
+  		}
+  		if (resRow == boardSize || resCol == boardSize || resDiag == boardSize || resAntiDiag == boardSize) {
+			System.out.println("X wins !");
+			return GamePlayer.ROBOT;
+		}
+  		else if (resRow == -boardSize || resCol == -boardSize || resDiag == -boardSize || resAntiDiag == -boardSize) {
+			System.out.println("O wins !");
+			return GamePlayer.HUMAN;
+		}
+  	}
     return null;
   }
 
@@ -150,7 +188,10 @@ public class GameController {
     // GamePlayer.HUMAN (the last move was made by the player) or null (this is the first move).
     // Inside `player` you have the player which wants to play now.
     // If he is allowed to play, you have to return true, otherwise you have to return false.
-
+	
+	if(gameBoard.getLastPlayer() == player) {
+		return false;
+	}
     return true;
   }
 
