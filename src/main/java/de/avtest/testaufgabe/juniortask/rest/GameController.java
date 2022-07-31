@@ -56,64 +56,43 @@ public class GameController {
    * @return
    */
   protected boolean someoneHasWon(GameBoard gameBoard) {
-    // ##### TASK 7 - Make this check more efficient ###############################################################
-    // =============================================================================================================
-    // This function checks if the game has already won. It does this by checking for every possible winning
-    // condition. For example, the first block below checks if the first row contains identical marks that are not
-    // GameMark.NONE.
-    // As you can see, this function is exorbitantly long and highly redundant. Your task is to find a way to
-    // shorten this function without compromising its functionality. Note that by "shorten", we don't mean to just
-    // remove spaces and line breaks ;)
-    // =============================================================================================================
-    if ( // Check the first row
-      gameBoard.getRow(0).getSpace(0) == gameBoard.getRow(0).getSpace(1) &&
-        gameBoard.getRow(0).getSpace(0) == gameBoard.getRow(0).getSpace(2) &&
-        gameBoard.getRow(0).getSpace(0) != GameMark.NONE
-    ) return true;
 
-    if ( // Check the second row
-      gameBoard.getRow(1).getSpace(0) == gameBoard.getRow(1).getSpace(1) &&
-        gameBoard.getRow(1).getSpace(0) == gameBoard.getRow(1).getSpace(2) &&
-        gameBoard.getRow(1).getSpace(0) != GameMark.NONE
-    ) return true;
+	  
+	// ##### TASK 7 - Make this check more efficient ###############################################################
+	// =============================================================================================================
+	// This function checks if the game has already won. It does this by checking for every possible winning
+	// condition. For example, the first block below checks if the first row contains identical marks that are not
+	// GameMark.NONE.
+	// As you can see, this function is exorbitantly long and highly redundant. Your task is to find a way to
+	// shorten this function without compromising its functionality. Note that by "shorten", we don't mean to just
+	// remove spaces and line breaks ;)
+	// =============================================================================================================
+	  int boardSize = gameBoard.getSize();
+	  	int resRow, resCol, resDiag, resAntiDiag;
+	  	for (int r = 0; r <boardSize; r++){
+	  		resRow = resCol = resDiag = resAntiDiag = 0;
+	  		for (int c = 0; c < boardSize; c++) {
+	  			
+	  			if(gameBoard.getSpace(r, c) == GameMark.CROSS) resRow ++;
+	  			else if(gameBoard.getSpace(r, c) == GameMark.CIRCLE) resRow --;
+	  			
+	  			if(gameBoard.getSpace(c, r) == GameMark.CROSS) resCol ++;
+	  			else if(gameBoard.getSpace(c, r) == GameMark.CIRCLE) resCol --;
+	  			
+	  			if(r == 0 && gameBoard.getSpace(c, c) == GameMark.CROSS) resDiag ++;
+	  			else if(r == 0 && gameBoard.getSpace(c, c) == GameMark.CIRCLE) resDiag --;
+	  			
+	  			
+	  			if(r == 0 && gameBoard.getSpace(c, boardSize -1 -c) == GameMark.CROSS) resAntiDiag ++;
+	  			else if(r == 0 && gameBoard.getSpace(c, boardSize -1 -c) == GameMark.CIRCLE) resAntiDiag --;
+	  		}
+	  		
+	  		if (Math.abs(resRow) == boardSize || Math.abs(resCol) == boardSize || Math.abs(resDiag) == boardSize || Math.abs(resAntiDiag) == boardSize) {
+				return true;
+			}
+	  	}
 
-    if ( // Check the third row
-      gameBoard.getRow(2).getSpace(0) == gameBoard.getRow(2).getSpace(1) &&
-        gameBoard.getRow(2).getSpace(0) == gameBoard.getRow(2).getSpace(2) &&
-        gameBoard.getRow(2).getSpace(0) != GameMark.NONE
-    ) return true;
-
-    if ( // Check the first column
-      gameBoard.getColumn(0).getSpace(0) == gameBoard.getColumn(0).getSpace(1) &&
-        gameBoard.getColumn(0).getSpace(0) == gameBoard.getColumn(0).getSpace(2) &&
-        gameBoard.getColumn(0).getSpace(0) != GameMark.NONE
-    ) return true;
-
-    if ( // Check the second column
-      gameBoard.getColumn(1).getSpace(0) == gameBoard.getColumn(1).getSpace(1) &&
-        gameBoard.getColumn(1).getSpace(0) == gameBoard.getColumn(1).getSpace(2) &&
-        gameBoard.getColumn(1).getSpace(0) != GameMark.NONE
-    ) return true;
-
-    if ( // Check the third column
-      gameBoard.getColumn(2).getSpace(0) == gameBoard.getColumn(2).getSpace(1) &&
-        gameBoard.getColumn(2).getSpace(0) == gameBoard.getColumn(2).getSpace(2) &&
-        gameBoard.getColumn(2).getSpace(0) != GameMark.NONE
-    ) return true;
-
-    if ( // Check the main diagonal
-      gameBoard.getMainDiagonal().getSpace(0) == gameBoard.getMainDiagonal().getSpace(1) &&
-        gameBoard.getMainDiagonal().getSpace(0) == gameBoard.getMainDiagonal().getSpace(2) &&
-        gameBoard.getMainDiagonal().getSpace(0) != GameMark.NONE
-    ) return true;
-
-    if ( // Check the anti-diagonal
-      gameBoard.getAntiDiagonal().getSpace(0) == gameBoard.getAntiDiagonal().getSpace(1) &&
-        gameBoard.getAntiDiagonal().getSpace(0) == gameBoard.getAntiDiagonal().getSpace(2) &&
-        gameBoard.getAntiDiagonal().getSpace(0) != GameMark.NONE
-    ) return true;
-
-    return false;
+	  	return false;
   }
 
   /**
@@ -126,46 +105,42 @@ public class GameController {
     // =============================================================================================================
     // Here, you need to code a way to find out who has won the game.
     // This function needs to return null if nobody has won yet - you can use someoneHasWon( $game ) for this.
-  	if(!someoneHasWon(gameBoard)) {
-  		return null;
-  	}
-    // If someone has won, it needs to return either GamePlayer::Human or GamePlayer::Robot.
-    // =============================================================================================================
-
-//  test row
-//  r is the index of row
-//	c is the index of column 
-//  resRow for testing the rows 
-//  resCol for testing the columns
-//  resDiag for testing the diagonal
-//  resAntiDiag for testing the Anti-diagonal
-  	int boardSize = gameBoard.getSize();
-  	int resRow, resCol, resDiag, resAntiDiag;
-  	for (int r = 0; r <boardSize; r++){
-  		resRow = resCol = resDiag = resAntiDiag = 0;
-  		for (int c = 0; c < boardSize; c++) {
-  			
-  			if(gameBoard.getSpace(r, c) == GameMark.CROSS) resRow ++;
-  			else if(gameBoard.getSpace(r, c) == GameMark.CIRCLE) resRow --;
-  			
-  			if(gameBoard.getSpace(c, r) == GameMark.CROSS) resCol ++;
-  			else if(gameBoard.getSpace(c, r) == GameMark.CIRCLE) resCol --;
-  			
-  			if(r == 0 && gameBoard.getSpace(c, c) == GameMark.CROSS) resDiag ++;
-  			else if(r == 0 && gameBoard.getSpace(c, c) == GameMark.CIRCLE) resDiag --;
-  			
-  			
-  			if(r == 0 && gameBoard.getSpace(c, boardSize -1 -c) == GameMark.CROSS) resAntiDiag ++;
-  			else if(r == 0 && gameBoard.getSpace(c, boardSize -1 -c) == GameMark.CIRCLE) resAntiDiag --;
-  		}
-  		if (resRow == boardSize || resCol == boardSize || resDiag == boardSize || resAntiDiag == boardSize) {
-			System.out.println("X wins !");
-			return GamePlayer.ROBOT;
-		}
-  		else if (resRow == -boardSize || resCol == -boardSize || resDiag == -boardSize || resAntiDiag == -boardSize) {
-			System.out.println("O wins !");
-			return GamePlayer.HUMAN;
-		}
+  	if(this.someoneHasWon(gameBoard)) {
+  	// If someone has won, it needs to return either GamePlayer::Human or GamePlayer::Robot.
+  	// =============================================================================================================
+  	//  test row
+  	//  r is the index of row
+  	//	c is the index of column 
+  	//  resRow for testing the rows 
+  	//  resCol for testing the columns
+  	//  resDiag for testing the diagonal
+  	//  resAntiDiag for testing the Anti-diagonal
+  	  	int boardSize = gameBoard.getSize();
+  	  	int resRow, resCol, resDiag, resAntiDiag;
+  	  	for (int r = 0; r <boardSize; r++){
+  	  		resRow = resCol = resDiag = resAntiDiag = 0;
+  	  		for (int c = 0; c < boardSize; c++) {
+  	  			
+  	  			if(gameBoard.getSpace(r, c) == GameMark.CROSS) resRow ++;
+  	  			else if(gameBoard.getSpace(r, c) == GameMark.CIRCLE) resRow --;
+  	  			
+  	  			if(gameBoard.getSpace(c, r) == GameMark.CROSS) resCol ++;
+  	  			else if(gameBoard.getSpace(c, r) == GameMark.CIRCLE) resCol --;
+  	  			
+  	  			if(r == 0 && gameBoard.getSpace(c, c) == GameMark.CROSS) resDiag ++;
+  	  			else if(r == 0 && gameBoard.getSpace(c, c) == GameMark.CIRCLE) resDiag --;
+  	  			
+  	  			
+  	  			if(r == 0 && gameBoard.getSpace(c, boardSize -1 -c) == GameMark.CROSS) resAntiDiag ++;
+  	  			else if(r == 0 && gameBoard.getSpace(c, boardSize -1 -c) == GameMark.CIRCLE) resAntiDiag --;
+  	  		}
+  	  		if (resRow == boardSize || resCol == boardSize || resDiag == boardSize || resAntiDiag == boardSize) {
+  				return GamePlayer.ROBOT;
+  			}
+  	  		else if (resRow == -boardSize || resCol == -boardSize || resDiag == -boardSize || resAntiDiag == -boardSize) {
+  				return GamePlayer.HUMAN;
+  			}
+  	  	}
   	}
     return null;
   }
