@@ -254,7 +254,7 @@ public class GameController {
 		// Prevent the player from playing if it is not his turn
 		if (!this.isAllowedToPlay(gameBoard, GamePlayer.ROBOT)) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN)
-					.body("You are not allowed to play. It is the bots turn!");
+					.body("You are not allowed to play. It is the player turn!");
 		}
 
 		var freeSpaces = new LinkedList<Map<String, Integer>>();
