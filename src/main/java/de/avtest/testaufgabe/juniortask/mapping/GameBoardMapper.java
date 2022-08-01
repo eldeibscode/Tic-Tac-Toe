@@ -24,13 +24,13 @@ public class GameBoardMapper {
 			values = entry.getValue().split(",");
 
 			try {
-				size = Integer.parseInt(values[0]);
+				size = Integer.parseInt(values[0].trim());
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
 			gameBoard.setSize(size);
 
-			states = values[2];
+			states = values[2].trim();
 			int index = 0;
 			for (int i = 0; i < size; i++) {
 				for (int j = 0; j < size; j++) {
@@ -44,7 +44,7 @@ public class GameBoardMapper {
 				}
 			}
 
-			lastPlayer = values[1];
+			lastPlayer = values[1].trim();
 			if (lastPlayer.equals("player")) {
 				gameBoard.setLastPlayer(GamePlayer.HUMAN);
 			} else if (lastPlayer.equals("bot")) {
@@ -70,7 +70,16 @@ public class GameBoardMapper {
 					boardState.append("-");
 			}
 		}
-		String lastPlayer = board.getLastPlayer() == GamePlayer.HUMAN ? "player" : "bot";
+		
+		String lastPlayer;
+		if(board.getLastPlayer() == GamePlayer.HUMAN) {
+			lastPlayer = "player";
+		}else if(board.getLastPlayer() == GamePlayer.ROBOT) {
+			lastPlayer = "bot";
+		}else {
+			lastPlayer = null;
+		}
+		
 		String state = String.valueOf(board.getSize()) + ", " + lastPlayer + ", " + boardState.toString();
 //		System.out.println(id + ", " + state);
 		GameBoardRepository.saveOrUpdateState(id, state);

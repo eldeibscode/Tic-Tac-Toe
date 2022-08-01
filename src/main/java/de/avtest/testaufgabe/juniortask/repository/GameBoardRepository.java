@@ -20,8 +20,8 @@ public class GameBoardRepository {
 			BufferedReader file = new BufferedReader(new FileReader(path));
 			String line;
 			while ((line = file.readLine()) != null) {
-				id = line.substring(0, line.indexOf(","));
-				board = line.substring(line.indexOf(",") + 2);
+				id = line.substring(0, line.indexOf(",")).trim();
+				board = line.substring(line.indexOf(",") + 1).trim();
 //				System.out.println("id:" + id);
 //				System.out.println("board:" + board);
 				map.put(id, board);
@@ -70,7 +70,7 @@ public class GameBoardRepository {
 				if (entry.getKey().equals(id)) {
 					bw.append(id + ", " + state);
 				} else {
-					bw.append(entry.getKey() + ", " + entry.getValue());
+					bw.append(entry.getKey() + "," + entry.getValue());
 				}
 				bw.newLine();
 			}

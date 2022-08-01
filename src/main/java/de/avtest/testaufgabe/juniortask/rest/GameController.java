@@ -219,12 +219,15 @@ public class GameController {
 		if (gameBoard.getSpace(x, y) != GameMark.NONE) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("This space has already been claimed!");
 		}
-
+		
 		gameBoard.setSpace(x, y, GameMark.CIRCLE);
 		// [ The code to update the game board goes here ]
 
 		// Saving the game board and output it to the player
-
+		
+//		save the gameBoard after play
+		GameBoardService.saveState(gameId, gameBoard);
+		
 		return this.statusOutput(gameBoard);
 	}
 
@@ -275,6 +278,9 @@ public class GameController {
 
 		gameBoard.setSpace(randomFreeSpace.get("x"), randomFreeSpace.get("y"), GameMark.CROSS);
 
+//		save the gameBoard after playBot
+		GameBoardService.saveState(gameId, gameBoard);
+		
 		return this.statusOutput(gameBoard);
 	}
 
@@ -290,6 +296,10 @@ public class GameController {
 		// Loading the game board
 		var uuid = UUID.randomUUID().toString();
 		storedGames.put(uuid, new GameBoard());
+		
+//		save the gameBoard after Creating game
+		GameBoardService.saveState(uuid, storedGames.get(uuid));
+		
 		return ResponseEntity.ok(uuid);
 	}
 }

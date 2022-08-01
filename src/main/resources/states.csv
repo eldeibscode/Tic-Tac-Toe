@@ -1,5 +1,7 @@
-id1, 3,bot,O-------O
-id2, 3,bot,---------
-id3, 3,bot,OX-------
-id4, 3,player,-------XO
-id5, 3,player,---XOX---
+id1, 3, player, O---O---O
+id2,3, bot, ---------
+id3,3, player, OX--O----
+id4,3, player,-------XO
+id5,3,player,---XOX---
+b6064957-95d7-4e75-94db-76405ba2ce0d,3,bot,---------
+6b35a98a-72d8-411d-81f4-0276572fca05,3,player,----O----
