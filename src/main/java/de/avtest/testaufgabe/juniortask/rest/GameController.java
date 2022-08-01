@@ -4,6 +4,8 @@ import de.avtest.testaufgabe.juniortask.data.GameBoard;
 import de.avtest.testaufgabe.juniortask.data.GameBoardSlice;
 import de.avtest.testaufgabe.juniortask.data.enums.GameMark;
 import de.avtest.testaufgabe.juniortask.data.enums.GamePlayer;
+import de.avtest.testaufgabe.juniortask.service.GameBoardService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.*;
 @RequestMapping("api/game")
 public class GameController {
 
+//	private final Map<String, GameBoard> storedGames = GameBoardService.getAllGames();
 	private final Map<String, GameBoard> storedGames = new LinkedHashMap<>();
 	private final Random random = new Random();
 	@Autowired
