@@ -1,30 +1,20 @@
 package de.avtest.testaufgabe.juniortask.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import de.avtest.testaufgabe.juniortask.data.GameBoard;
+import de.avtest.testaufgabe.juniortask.mapping.GameBoardMapper;
 
 public class GameBoardService {
 
-	//	get string from mapper
-//	call repe and saver the string with the id
+//	get all stored game-board with id from mapper.
+	public static Map<String, GameBoard> getStoredGames() {
+		return GameBoardMapper.getAllGames();
+	}
+
+//	save the current State of the GameBoard with given id
 	public static void saveState(String id, GameBoard board) {
-			
+		GameBoardMapper.saveOrUpdateState(id, board);
 	}
-	
-//	get string form repo
-//	ussing mapper to get Gameboaed
-	public static GameBoard readState(String id) {
-		
-		return null;
-	}
-	
-//	get all form json
-//	map all games to id-string
-//	map from STring to Data-Gameboard object.
-	public static Map<String, GameBoard> getAllGames(){
-		
-		return null;
-	}
-	
 }

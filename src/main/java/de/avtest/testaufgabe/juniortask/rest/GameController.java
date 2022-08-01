@@ -20,8 +20,8 @@ import java.util.*;
 @RequestMapping("api/game")
 public class GameController {
 
-//	private final Map<String, GameBoard> storedGames = GameBoardService.getAllGames();
-	private final Map<String, GameBoard> storedGames = new LinkedHashMap<>();
+	private final Map<String, GameBoard> storedGames = GameBoardService.getStoredGames();
+//	private final Map<String, GameBoard> storedGames = new LinkedHashMap<>();
 	private final Random random = new Random();
 	@Autowired
 	private CopyrightController copyrightController;

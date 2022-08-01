@@ -7,60 +7,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-
 public class GameBoardRepository {
-
-	private static String path = new File("").getAbsolutePath() + "/src/main/resources/states.txt";
-
-	public static void saveOrUpdateState(String id, String state) {
-		Map<String, String> boards = readAllStates();
-		if(boards.get(id) == null) {
-			try {
-				BufferedWriter bw = new BufferedWriter(new FileWriter(path, true));
-				bw.append(id +", "+state);
-				bw.newLine();
-				bw.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else {
-			updateState(id, state);
-		}
-		
-
-	}
-
-	public static String readState(String id) {
-		Map<String, String> allState = readAllStates();
-		return allState.get(id);
-	}
-	
-	public static void updateState(String id, String state) {
-		Map<String, String> allState = readAllStates();
-		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
-			
-			for(Map.Entry<String, String> entry : allState.entrySet()) {
-//				System.out.println(entry.getKey() + ", " + entry.getValue());
-				if(entry.getKey().equals(id)) {
-					bw.append(id + ", "+ state);
-				}else {
-					bw.append(entry.getKey() +", "+entry.getValue());
-				}
-				bw.newLine();
-			}
-			bw.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private static String path = new File("").getAbsolutePath() + "/src/main/resources/states.csv";
 
 	public static Map<String, String> readAllStates() {
-
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new LinkedHashMap<String, String>();
 		String id, board, size, lastPlayer;
 		try {
 			BufferedReader file = new BufferedReader(new FileReader(path));
@@ -68,7 +22,7 @@ public class GameBoardRepository {
 			while ((line = file.readLine()) != null) {
 				id = line.substring(0, line.indexOf(","));
 				board = line.substring(line.indexOf(",") + 2);
-//				System.out.println(id);
+//				System.out.println("id:" + id);
 //				System.out.println("board:" + board);
 				map.put(id, board);
 			}
@@ -81,6 +35,49 @@ public class GameBoardRepository {
 			e.printStackTrace();
 		}
 		return map;
+	}
+	
+//	public static String readState(String id) {
+//		Map<String, String> allState = readAllStates();
+//		return allState.get(id);
+//	}
+
+	public static void saveOrUpdateState(String id, String state) {
+		Map<String, String> boards = readAllStates();
+		if (boards.get(id) == null) {
+			try {
+				BufferedWriter bw = new BufferedWriter(new FileWriter(path, true));
+				bw.append(id + ", " + state);
+				bw.newLine();
+				bw.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			updateState(id, state);
+		}
+	}
+
+
+
+	public static void updateState(String id, String state) {
+		Map<String, String> allState = readAllStates();
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+
+			for (Map.Entry<String, String> entry : allState.entrySet()) {
+//				System.out.println(entry.getKey() + ", " + entry.getValue());
+				if (entry.getKey().equals(id)) {
+					bw.append(id + ", " + state);
+				} else {
+					bw.append(entry.getKey() + ", " + entry.getValue());
+				}
+				bw.newLine();
+			}
+			bw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
