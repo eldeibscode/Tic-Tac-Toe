@@ -8,8 +8,18 @@ import de.avtest.testaufgabe.juniortask.data.enums.GameMark;
 import de.avtest.testaufgabe.juniortask.data.enums.GamePlayer;
 import de.avtest.testaufgabe.juniortask.repository.GameBoardRepository;
 
+/**
+ * @author moham
+ *	Mapped the GameBoard Object to String  saving it as Sting in the file-system
+ */
+
 public class GameBoardMapper {
 
+	
+	/**
+	 * @return
+	 * return all stored gameBoards
+	 */
 	public static Map<String, GameBoard> getAllGames() {
 		Map<String, String> allStates = GameBoardRepository.readAllStates();
 		Map<String, GameBoard> allGames = new LinkedHashMap<>();
@@ -58,6 +68,11 @@ public class GameBoardMapper {
 		return allGames;
 	}
 
+	/**
+	 * @param id
+	 * @param board
+	 * saved the gameBoard if it not saved, or update the state of the board, it are saved before.
+	 */
 	public static void saveOrUpdateState(String id, GameBoard board) {
 		StringBuilder boardState = new StringBuilder();
 		for (int i = 0; i < board.getSize(); i++) {
@@ -70,24 +85,16 @@ public class GameBoardMapper {
 					boardState.append("-");
 			}
 		}
-		
-		String lastPlayer;
-		if(board.getLastPlayer() == GamePlayer.HUMAN) {
+
+		String lastPlayer = null;
+		if (board.getLastPlayer() == GamePlayer.HUMAN) {
 			lastPlayer = "player";
-		}else if(board.getLastPlayer() == GamePlayer.ROBOT) {
+		} else if (board.getLastPlayer() == GamePlayer.ROBOT) {
 			lastPlayer = "bot";
-		}else {
-			lastPlayer = null;
 		}
-		
+
 		String state = String.valueOf(board.getSize()) + ", " + lastPlayer + ", " + boardState.toString();
-//		System.out.println(id + ", " + state);
 		GameBoardRepository.saveOrUpdateState(id, state);
 	}
 
-	public static void main(String[] args) {
-		saveOrUpdateState("idTestCSV", new GameBoard());
-//		System.out.println(stringToGameBoard("3:[---------]:bot"));
-
-	}
 }

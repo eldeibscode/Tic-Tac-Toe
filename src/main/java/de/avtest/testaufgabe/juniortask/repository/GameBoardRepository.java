@@ -10,9 +10,16 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * @author moham
+ *
+ */
 public class GameBoardRepository {
 	private static String path = new File("").getAbsolutePath() + "/src/main/resources/states.csv";
 
+	/**
+	 * @return all stored gameBoard as strings.
+	 */
 	public static Map<String, String> readAllStates() {
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		String id, board, size, lastPlayer;
@@ -36,12 +43,12 @@ public class GameBoardRepository {
 		}
 		return map;
 	}
-	
-//	public static String readState(String id) {
-//		Map<String, String> allState = readAllStates();
-//		return allState.get(id);
-//	}
 
+	/**
+	 * @param id
+	 * @param state
+	 * Saved or update the gameBoard-state as String to the file-system.
+	 */
 	public static void saveOrUpdateState(String id, String state) {
 		Map<String, String> boards = readAllStates();
 		if (boards.get(id) == null) {
@@ -50,6 +57,10 @@ public class GameBoardRepository {
 				bw.append(id + ", " + state);
 				bw.newLine();
 				bw.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -57,9 +68,13 @@ public class GameBoardRepository {
 			updateState(id, state);
 		}
 	}
-
-
-
+	
+	
+	/**
+	 * @param id
+	 * @param state
+	 * update the stored gameBoard-state.
+	 */
 	public static void updateState(String id, String state) {
 		Map<String, String> allState = readAllStates();
 		try {
@@ -70,27 +85,18 @@ public class GameBoardRepository {
 				if (entry.getKey().equals(id)) {
 					bw.append(id + ", " + state);
 				} else {
-					bw.append(entry.getKey() + "," + entry.getValue());
+					bw.append(entry.getKey() + ", " + entry.getValue());
 				}
 				bw.newLine();
 			}
 			bw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void main(String[] args) {
-
-//		saveState("8bedd5da-1194-11ed-861d-0242ac120ddd", "3, bot, XOXOX-X--");
-//		System.out.println("read State: " + readState("8bedd5da-1194-11ed-861d-0242ac120002"));
-
-//		Map<String, String> map = GameBoardRepository.readAllStates();
-////		System.out.println("using keySet");
-//		for (String key : map.keySet()) {
-//			System.out.println(key + ":" + map.get(key));
-//		}
-		saveOrUpdateState("testId33", "Halsjdlkfjsflklksfk");
 	}
 
 }

@@ -8,12 +8,18 @@ import de.avtest.testaufgabe.juniortask.mapping.GameBoardMapper;
 
 public class GameBoardService {
 
-//	get all stored game-board with id from mapper.
+	/**
+	 * @return all stored game-board with id from mapper.
+	 */
 	public static Map<String, GameBoard> getStoredGames() {
 		return GameBoardMapper.getAllGames();
 	}
 
-//	save the current State of the GameBoard with given id
+	/**
+	 * @param id
+	 * @param board
+	 * save the current State of the GameBoard with given id
+	 */
 	public static void saveState(String id, GameBoard board) {
 		GameBoardMapper.saveOrUpdateState(id, board);
 	}

@@ -1,7 +1,9 @@
-id1, 3, player, O---O---O
-id2,3, bot, ---------
-id3,3, player, OX--O----
-id4,3, player,-------XO
-id5,3,player,---XOX---
-b6064957-95d7-4e75-94db-76405ba2ce0d,3,bot,---------
-6b35a98a-72d8-411d-81f4-0276572fca05,3,player,----O----
+id1, 3, bot, O---XX--O
+id2, 3, bot, ---------
+id3, 3, player, OX--O----
+id4, 3, player,-------XO
+id5, 3, bot, ---XOX--X
+b6064957-95d7-4e75-94db-76405ba2ce0d, 3, bot, ----OX---
+6b35a98a-72d8-411d-81f4-0276572fca05, 3, player, O---O--X-
+c40a449a-3f5f-4f21-bfda-c04253bbc55f, 3, bot, --X-O----
+35e9c781-8ff0-4aae-b2a0-d6045f86e40e, 3, null, ---------
